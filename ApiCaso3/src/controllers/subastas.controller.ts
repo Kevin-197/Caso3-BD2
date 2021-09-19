@@ -3,7 +3,7 @@ import Articulo from "../models/subastas";
 
 export const addArticulo = async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.NombreDueño || !req.query.EmailDueño || !req.query.ExpDate) {
-        return res.status(400).json({ msg: "Please. Send your email and password" });
+        return res.status(400).json({ msg: "Please. complete in the information" });
     }
     const articulo = await Articulo.findOne({ EmailDueño: req.query.EmailDueño?.toString(), NombreArticulo: req.query.NombreArticulo?.toString()});
     if (articulo) {
@@ -13,6 +13,38 @@ export const addArticulo = async (req: Request, res: Response): Promise<Response
     const newArticulo = new Articulo(req.query);
     await newArticulo.save();
     return res.status(201).json(newArticulo);
+}
+
+
+export const removeArticulo = async (req: Request, res: Response): Promise<Response> => {
+    if (!req.query.NombreArticulo || !req.query.EmailDueño) {
+        return res.status(400).json({ msg: "Please. complete in the information" });
+    }
+    const articulo = await Articulo.findOneAndUpdate({ EmailDueño: req.query.EmailDueño?.toString(), NombreArticulo: req.query.NombreArticulo?.toString(), Active: 1},{Active: 0},{new: true});
+    if (articulo) {
+        return res.status(201).json(articulo);
+
+        
+    }
+    else{
+        return res.status(400).json({ msg: "El articulo no existe" });
+    }
+    
+}
+
+export const addOffer = async (req: Request, res: Response): Promise<Response> => {
+    if (!req.query.NombreArticulo || !req.query.EmailDueño || !req.query.Offer || !req.query.Nombreo || !req.query.Emailo) {
+        return res.status(400).json({ msg: "Please. complete in the information" });
+    }
+    const articulo = await Articulo.findOneAndUpdate({EmailDueño: req.query.EmailDueño?.toString(), NombreArticulo: req.query.NombreArticulo?.toString(), Active: 1, 
+        PrecioMaximo: {$lt:req.query.Offer}},{PrecioMaximo: req.query.Offer, $push: { Ofertas: { Monto: req.query.Offer, Nombre: req.query.Nombreo, Email: req.query.Emailo} }},{new: true});
+    if (articulo) {
+        return res.status(201).json(articulo);        
+    }
+    else{
+        return res.status(400).json({ msg: "No se pudo dar la oferta" });
+    }
+    
 }
 
 export const showAll = async (req: Request, res: Response): Promise<Response> => {
