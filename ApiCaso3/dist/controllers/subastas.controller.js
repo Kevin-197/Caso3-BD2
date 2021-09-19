@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addArticulo = void 0;
+exports.showAll = exports.addArticulo = void 0;
 const subastas_1 = __importDefault(require("../models/subastas"));
 const addArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -28,3 +28,8 @@ const addArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     return res.status(201).json(newArticulo);
 });
 exports.addArticulo = addArticulo;
+const showAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const list = yield subastas_1.default.find({ Active: 1 });
+    return res.status(201).json(list);
+});
+exports.showAll = showAll;

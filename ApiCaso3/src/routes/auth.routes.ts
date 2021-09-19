@@ -1,8 +1,10 @@
 import {Router} from 'express'
-import {addArticulo} from '../controllers/subastas.controller'
+import {addArticulo, showAll} from '../controllers/subastas.controller'
 
 const router = Router();
 
-router.post('/signup', addArticulo);
+router.post('/add', addArticulo);
+
+router.get('/show', showAll);
 
 export default router;

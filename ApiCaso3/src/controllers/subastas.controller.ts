@@ -15,3 +15,9 @@ export const addArticulo = async (req: Request, res: Response): Promise<Response
     return res.status(201).json(newArticulo);
 }
 
+export const showAll = async (req: Request, res: Response): Promise<Response> => {
+    const list = await Articulo.find({Active: 1});
+    return res.status(201).json(list);
+    
+}
+
