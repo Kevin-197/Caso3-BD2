@@ -8,57 +8,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.showAll = exports.addOffer = exports.removeArticulo = exports.addArticulo = void 0;
-const subastas_1 = __importDefault(require("../models/subastas"));
+const data_subastas_1 = require("../repositories/data_subastas");
 const addArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
     if (!req.query.NombreDueño || !req.query.EmailDueño || !req.query.ExpDate) {
         return res.status(400).json({ msg: "Please. complete in the information" });
     }
-    const articulo = yield subastas_1.default.findOne({ EmailDueño: (_a = req.query.EmailDueño) === null || _a === void 0 ? void 0 : _a.toString(), NombreArticulo: (_b = req.query.NombreArticulo) === null || _b === void 0 ? void 0 : _b.toString() });
-    if (articulo) {
-        return res.status(400).json({ msg: "El articulo ya existe" });
+    else {
+        return (0, data_subastas_1.addArticulo_r)(req, res);
     }
-    const newArticulo = new subastas_1.default(req.query);
-    yield newArticulo.save();
-    return res.status(201).json(newArticulo);
 });
 exports.addArticulo = addArticulo;
 const removeArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d;
     if (!req.query.NombreArticulo || !req.query.EmailDueño) {
         return res.status(400).json({ msg: "Please. complete in the information" });
     }
-    const articulo = yield subastas_1.default.findOneAndUpdate({ EmailDueño: (_c = req.query.EmailDueño) === null || _c === void 0 ? void 0 : _c.toString(), NombreArticulo: (_d = req.query.NombreArticulo) === null || _d === void 0 ? void 0 : _d.toString(), Active: 1 }, { Active: 0 }, { new: true });
-    if (articulo) {
-        return res.status(201).json(articulo);
-    }
     else {
-        return res.status(400).json({ msg: "El articulo no existe" });
+        return (0, data_subastas_1.removeArticulo_r)(req, res);
     }
 });
 exports.removeArticulo = removeArticulo;
 const addOffer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e, _f;
     if (!req.query.NombreArticulo || !req.query.EmailDueño || !req.query.Offer || !req.query.Nombreo || !req.query.Emailo) {
         return res.status(400).json({ msg: "Please. complete in the information" });
     }
-    const articulo = yield subastas_1.default.findOneAndUpdate({ EmailDueño: (_e = req.query.EmailDueño) === null || _e === void 0 ? void 0 : _e.toString(), NombreArticulo: (_f = req.query.NombreArticulo) === null || _f === void 0 ? void 0 : _f.toString(), Active: 1,
-        PrecioMaximo: { $lt: req.query.Offer } }, { PrecioMaximo: req.query.Offer, $push: { Ofertas: { Monto: req.query.Offer, Nombre: req.query.Nombreo, Email: req.query.Emailo } } }, { new: true });
-    if (articulo) {
-        return res.status(201).json(articulo);
-    }
     else {
-        return res.status(400).json({ msg: "No se pudo dar la oferta" });
+        return (0, data_subastas_1.addOffer_r)(req, res);
     }
 });
 exports.addOffer = addOffer;
 const showAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const list = yield subastas_1.default.find({ Active: 1 });
-    return res.status(201).json(list);
+    return (0, data_subastas_1.showAll_r)(req, res);
 });
 exports.showAll = showAll;
