@@ -9,6 +9,7 @@ const Subastas = new Schema(
     FotoUrl: String,
     PrecioInicial: Number,
     PrecioMaximo: Number,
+    PublishDate: Date,
     ExpDate: Date,
     NombreDueño: String,
     EmailDueño: String,

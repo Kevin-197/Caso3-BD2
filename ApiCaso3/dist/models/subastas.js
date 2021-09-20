@@ -8,6 +8,7 @@ const Subastas = new mongoose_1.Schema({
     FotoUrl: String,
     PrecioInicial: Number,
     PrecioMaximo: Number,
+    PublishDate: Date,
     ExpDate: Date,
     NombreDueño: String,
     EmailDueño: String,
