@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Card View - Hotel Focus - Animations</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+          type="text/javascript"
+          src="//code.jquery.com/jquery-1.9.1.js"
+
+  ></script>
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://amatravel.qa.tstllc.net/web-services/common/assets/stylesheets/tst-icons.css">
+
+  <style id="compiled-css" type="text/css">
+    /* Card Styles */
+    .product-results {
+      font-size: 16px;
+    }
+
+    .card {
+      display: inline-block;
+      position: relative;
+      width: 320px;
+      height: 365px;
+      vertical-align: top;
+      z-index: 0;
+      margin: 2%;
+      font-family: 'Oswald';
+      font-weight: 300;
+      border: 1px solid #666;
+      box-shadow: 0 8px 6px -6px black;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    .card .photo {
+      position: relative;
+      height: 230px;
+      max-width: 100%;
+      background-color: #fff;
+    }
+
+    .card .photo img {
+      width: 100%
+    }
+
+    .card .photo .img {
+      min-width: 100%;
+      min-height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .card .price {
+      position: absolute;
+      top: 2%;
+      right: 2%;
+      min-width: 100px;
+      min-height: 42px;
+      z-index: 125;
+      font-size: 1.75em;
+      text-align: center;
+      font-weight: 700;
+      color: #f1f1f1;
+      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 0 2%;
+      white-space: nowrap;
+    }
+
+    .card .vendor-logo {
+      position: absolute;
+      top: 2%;
+      left: 2%;
+      max-width: 100%;
+    }
+
+    .card .sale-label, .card .feature-label {
+      display: none;
+    }
+
+    .card.sale .sale-label, .card.featured .feature-label {
+      display: inline-block;
+      position: absolute;
+      left: 2%;
+      top: -35px;
+      padding: 1% 3%;
+      color: #f1f1f1;
+      font-size: 1em;
+      font-weight: normal;
+      background-color: #119a63;
+      background-color: rgba(17, 154, 99, 0.8);
+    }
+
+    .card.featured .feature-label {
+      right: 2%;
+      left: auto;
+      color: #000;
+      background-color: #ffff66;
+      background-color: rgba(255, 255, 102, 0.8);
+    }
+
+    .card .photo .title {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      z-index: 125;
+      padding: 1%;
+      box-sizing: border-box;
+      min-width: 100%;
+      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.6);
+      -webkit-transition: opacity 0.2s 0s;
+    }
+    .card.dark .photo .title {
+      color: #fff;
+      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .card .price.sale {
+      background-color: #ff0000;
+      background-color: rgba(255, 0, 0, 0.6);
+    }
+    .card .currency {
+      font-size: .5em;
+      margin-left: 2%;
+    }
+
+    .card .description {
+      position: relative;
+      z-index: 200;
+      min-height: 280px;
+      padding: 1.5%;
+      background-color: #fff;
+      -webkit-transition: box-shadow 0.2s 0s;
+    }
+
+    .card .description .title {
+      overflow: hidden;
+      height: 0;
+    }
+
+    .card .description .callToAction {
+      text-align: center;
+      position: absolute;
+      left: 0;
+      bottom: 1%;
+      width: 100%;
+    }
+    .card .description .callToAction a {
+      display: inline-block;
+      line-height: 1.5em;
+      background-color: #119A63;
+      color: #fff;
+      text-decoration: none;
+      padding: 2% 8%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .card .description .bottom,
+    .card .description .title h3 {
+      margin-top: 50%;
+      -webkit-transition: all 0.2s;
+    }
+
+    .card .description .top,
+    .card .description .bottom {
+      width: 100%;
+      min-height: 40%;
+    }
+
+    .card .diamonds {
+      height: 25px;
+    }
+    .card .tst-icon-diamond {
+      color: #6e111a;
+      margin: 0 -4px;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 1px;
+    }
+    .card .tst-icon-diamond.disabled {
+      color: #ccc;
+    }
+
+    .card .description .title,
+    .card .description .bottom {
+      -webkit-transition: all 0s 0s;
+    }
+
+    /* Hover Section */
+    .card:hover .photo .title {
+      opacity: 0;
+      -webkit-transition: opacity 0.2s 0.5s;
+    }
+    .card:hover .description .title h3,
+    .card:hover .description .bottom {
+      margin-top: 0%;
+      -webkit-transition: all 0.2s 0.5s;
+    }
+    .card:hover .description {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: -45%;
+      -webkit-animation-name: bounceInUp;
+      box-shadow: 0 -4px 8px -4px black;
+      -webkit-transition: box-shadow 0.2s 0.5s;
+    }
+    .card:hover .description .title {
+      height: 3em;
+    }
+    .card:hover .description .title,
+    .card:hover .description .bottom {
+      -webkit-transition: all 0.2s .5s;
+    }
+
+    .card .animate {
+      -webkit-animation-fill-mode: both;
+      -webkit-animation-direction: normal;
+      -webkit-animation-delay: 0.5s;
+      -webkit-animation-duration: 0.5s;
+    }
+    /* animation key frames */
+    @-webkit-keyframes bounceInUp {
+      0% {
+        top: 0;
+      }
+      10% {
+        top: -30%;
+      }
+      40% {
+        top: -55%;
+      }
+      60% {
+        top: -40%;
+      }
+      70% {
+        top: -47%;
+      }
+      100% {
+        top: -45%;
+      }
+    }
+
+    @-webkit-keyframes slideDown {
+      0% {
+        top: -45%;
+      }
+      100% {
+        top: 0;
+      }
+    }
+
+    /* Hotel Description */
+    .rating {
+    }
+    .rating:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .rating .diamonds {
+      float: left;
+    }
+    .rating [class*="diamond-rating-"] {
+      width: 90px;
+      height: 10px;
+      margin: 6px 0;
+    }
+    .rating .trip-advisor {
+      display: inline-block;
+      float: right;
+    }
+    .rating .trip-advisor img {
+      vertical-align: top;
+    }
+
+    /* Green Label */
+    .ribbon-container {
+      width: 100px;
+      min-height: 32px;
+      overflow: visible;
+      position: absolute;
+      bottom: 30%;
+      left: -5px;
+      z-index: 100;
+    }
+
+    /*
+     * Left-hand Wrap Around Ribbon
+     */
+    .ribbon-green-horizontal {
+      position: absolute;
+      width: 90px;
+      left: 69px;
+      font-weight: normal;
+      font-size: 0.75em;
+      text-align: center;
+      text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px;
+      padding: 2px 8px 2px 6px;
+      margin: 30px 10px 10px -70px;
+      background-color: #BFDC7A;
+
+      -moz-box-shadow: 0px 2px 4px #888;
+      box-shadow: 0px 3px 4px #444;
+    }
+
+    .ribbon-green-horizontal:after {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 0px;
+      top: 100%;
+      border-width: 5px 3px;
+      border-style: solid;
+      border-color: #666 #666 transparent transparent;
+    }
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+  <script src="/js/stringify.js?e1eb5b7e927dafa7b5de10d0ac2d242af913642e" charset="utf-8"></script>
+  <script>
+    const customConsole = (w) => {
+      const pushToConsole = (payload, type) => {
+        w.parent.postMessage({
+          console: {
+            payload: stringify(payload),
+            type:    type
+          }
+        }, "*")
+      }
+
+      w.onerror = (message, url, line, column) => {
+        // the line needs to correspond with the editor panel
+        // unfortunately this number needs to be altered every time this view is changed
+        line = line - 70
+        if (line < 0){
+          pushToConsole(message, "error")
+        } else {
+          pushToConsole(`[${line}:${column}] ${message}`, "error")
+        }
+      }
+
+      let console = (function(systemConsole){
+        return {
+          log: function(){
+            let args = Array.from(arguments)
+            pushToConsole(args, "log")
+            systemConsole.log.apply(this, args)
+          },
+          info: function(){
+            let args = Array.from(arguments)
+            pushToConsole(args, "info")
+            systemConsole.info.apply(this, args)
+          },
+          warn: function(){
+            let args = Array.from(arguments)
+            pushToConsole(args, "warn")
+            systemConsole.warn.apply(this, args)
+          },
+          error: function(){
+            let args = Array.from(arguments)
+            pushToConsole(args, "error")
+            systemConsole.error.apply(this, args)
+          },
+          system: function(arg){
+            pushToConsole(arg, "system")
+          },
+          clear: function(){
+            systemConsole.clear.apply(this, {})
+          },
+          time: function(){
+            let args = Array.from(arguments)
+            systemConsole.time.apply(this, args)
+          },
+          assert: function(assertion, label){
+            if (!assertion){
+              pushToConsole(label, "log")
+            }
+
+            let args = Array.from(arguments)
+            systemConsole.assert.apply(this, args)
+          }
+        }
+      }(window.console))
+
+      window.console = { ...window.console, ...console }
+
+      console.system("Running fiddle")
+    }
+
+    if (window.parent){
+      customConsole(window)
+    }
+  </script>
+</head>
+<body>
+<div class="cards product-results"></div>
+
+<!-- Templates -->
+<script type="text/template" id="card-template">
+  <div class="card {{attributes}}">
+    <div class="photo">
+      <!-- <img src="{{imgUrl}}"/> -->
+      <div class="img" style="background-image: url({{imgUrl}});"></div>
+      <div class="vendor-logo">
+        <img src="{{vendorLogoUrl}}"/>
+      </div>
+      <div class="price">
+        {{price}}<span class="currency">{{period}} {{currency}}</span>
+      </div>
+      <div class="title">
+        <div class="sale-label">
+          {{saleMsg}}
+        </div>
+        <div class="feature-label">
+          {{featureMsg}}
+        </div>
+        <h3>{{title}}</h3>
+      </div>
+    </div>
+    <div class="description animate">
+      <div class="title">
+        <h3>{{title}}</h3>
+      </div>
+      {{description}}
+      <div class="callToAction">
+        <a href="#">View</a>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="hotel-description">
+  <div class="top">
+    {{#if diamondRating}}
+    <div class="rating">
+      <!-- <span class="diamonds diamond-rating-{{diamondRating}}"></span> -->
+      <span class="diamonds">{{diamondRating diamondRating 5}}</span>
+      <span class="trip-advisor"><img src="{{tripAdvisorUrl}}"/></span>
+    </div>
+    {{/if}}
+    <div class="address">
+      {{address}}
+      <!--
+      <div class="street">{{street}}</div>
+      <div class="city-state">
+          {{cityState}} {{zipcode}} {{country}}
+      </div>
+      -->
+    </div>
+    <div class="phone">
+      <!-- <a href="tel:{{phone}}">{{phone}}</a> -->
+      {{phone}}
+    </div>
+  </div>
+  <div class="bottom">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum luctus semper. Nulla gravida condimentum libero rhoncus interdum. Ut ac quam et ipsum pretium viverra. Nulla facilisi.
+  </div>
+</script>
+
+<script type="text/javascript">//<![CDATA[
+
+
+$('head').append("<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'/>");
+
+$('head').append('<meta name="apple-mobile-web-app-capable" content="yes"/>');
+
+$('head').append('<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.5, user-scalable=yes"/>');
+
+// handlebar methods
+Handlebars.registerHelper('diamondRating', function(rating, outOf) {
+  var ratingDom = "";
+  for(var i=1; i <= rating; i++) {
+    ratingDom = ratingDom + "<span class=\"tst-icon-diamond\"></span>";
+  }
+  for (var o=rating; o < outOf; o++) {
+    ratingDom = ratingDom + "<span class=\"tst-icon-diamond disabled\"></span>";
+  }
+  return new Handlebars.SafeString(ratingDom);
+});
+
+// load card template
+var cardTemplate = Handlebars.compile($("#card-template").html());
+var hotelTemplate = Handlebars.compile($("#hotel-description").html());
+
+// cards
+var cards = [
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/160510/123035896/stock-photo-hotel-room-123035896.jpg",
+    price: "$4979",
+    attributes: "featured",
+    featureMsg: "Feature",
+    currency: "USD",
+    title: "Atlanta Marriott Buckhead Hotel ",
+    description: new Handlebars.SafeString(hotelTemplate({
+      diamondRating: "4",
+      tripAdvisorUrl: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-13883-1.gif",
+      tripAdvisor: "3",
+      address: "3405 Lenox Road, Atlanta, GA 30326 Unitied States",
+      street: "3405 Lenox Road",
+      cityState: "Atlanta, GA",
+      zipcode: "30326",
+      country: "Unitied States",
+      phone: "1-800-555-1212"
+    }))
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/82393/82393,1296425822,1/stock-photo-night-pool-side-of-rich-hotel-trademarks-were-removed-70110103.jpg",
+    attributes: "sale featured",
+    saleMsg: "Save 10%",
+    featureMsg: "Featured",
+    price: "$173",
+    currency: "USD",
+    title: "Atlanta Marriott Buckhead Hotel & Conference Center Part Two",
+    description: new Handlebars.SafeString(hotelTemplate({
+      diamondRating: "3",
+      tripAdvisorUrl: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/2.5-13883-1.gif",
+      address: "123 Main Street, New York, NY 12345",
+      street: "123 Main Street",
+      cityState: "Atlanta, GA",
+      zipcode: "12345",
+      phone: "404-123-1234"
+    }))
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/565474/142345144/stock-photo-day-view-of-a-hotel-exterior-with-window-to-dining-room-142345144.jpg",
+    price: "$387",
+    currency: "USD",
+    title: "Best Western Hotel & Suites Airport South",
+    description: new Handlebars.SafeString(hotelTemplate({
+      address: "123 Main Street, New York, NY 12345",
+      street: "123 Main Street",
+      cityState: "Atlanta, GA",
+      zipcode: "12345"
+    }))
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/304396/112902592/stock-photo-modern-lobby-for-five-stars-hotel-112902592.jpg",
+    price: "$843",
+    currency: "USD",
+    title: "Another Awesome Hotel Name",
+    description: new Handlebars.SafeString(hotelTemplate({
+      diamondRating: "3",
+      address: "123 Main Street, New York, NY 12345",
+      street: "123 Main Street",
+      cityState: "Atlanta, GA",
+      zipcode: "12345"
+    }))
+  },
+
+  {imgUrl: "https://dashboard.qa.tstllc.net/images/car/hertz/cars/ZEUSSCAR999.jpg",
+    saleMsg: "5% discount",
+    attributes: "sale",
+    price: "$19",
+    period: "/day",
+    currency: "USD",
+    description: "car description",
+    title: "Economy - Kia Rio Or Similar"
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/749500/106135718/stock-photo-night-pool-side-of-rich-hotel-106135718.jpg",
+    price: "$231",
+    currency: "USD",
+    title: "Another Awesome Hotel Name",
+    description: new Handlebars.SafeString(hotelTemplate({
+      diamondRating: "5",
+      address: "123 Main Street, New York, NY 12345 United States",
+      street: "123 Main Street",
+      cityState: "Atlanta, GA",
+      zipcode: "12345"
+    }))
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/102438/102438,1251667798,5/stock-photo-detail-of-a-four-stars-hotel-with-reflection-36184549.jpg",
+    saleMsg: "Save 15% Now!",
+    attributes: "sale",
+    price: "$112",
+    currency: "CAD",
+    title: "Another Awesome Hotel Name",
+    description: new Handlebars.SafeString(hotelTemplate({
+      street: "123 Main Street",
+      cityState: "Atlanta, GA",
+      zipcode: "12345"
+    }))
+  },
+
+  {imgUrl: "https://dashboard.qa.tstllc.net/images/car/hertz/cars/ZEUSCCAR999.jpg",
+    vendorLogoUrl: "https://amatravel.qa.tstllc.net/car/assets/images/car_vendor_logo/hertz.png",
+    price: "$47",
+    period: "/day",
+    currency: "CAD",
+    description: "car description",
+    title: "Economy - Kia Rio Or Similar"
+  },
+
+  {imgUrl: "https://dashboard.qa.tstllc.net/images/car/hertz/cars/ZEUSPCAR999.jpg",
+    attributes: "",
+    price: "$29",
+    period: "/day",
+    currency: "USD",
+    description: "car description",
+    title: "Economy - Kia Rio Or Similar"
+  },
+
+  // cruise
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/131785/106514864/stock-photo-bamboo-hut-on-a-tropical-beach-106514864.jpg",
+    vendorLogoUrl: "https://amatravel.qa.tstllc.net/cruise/common/assets/images/cruise-line/rc.png",
+    price: "$2345",
+    currency: "USD",
+    description: "cruise description",
+    title: "Miami, Florida (RT)"
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/94501/94501,1329501415,3/stock-photo-romantic-cozy-hammock-in-the-shadow-of-the-palm-on-the-tropical-beach-by-the-sea-95647150.jpg",
+    vendorLogoUrl: "https://amatravel.qa.tstllc.net/cruise/common/assets/images/cruise-line/cv.png",
+    saleMsg: "5% Discount",
+    attributes: "sale",
+    price: "$664",
+    currency: "CAD",
+    description: "cruise description",
+    title: "Port Canaveral, Florida (RT)"
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/100406/98774909/stock-photo-villas-on-the-green-tropical-beach-with-steps-into-water-98774909.jpg",
+    price: "$1889",
+    currency: "USD",
+    description: "cruise description",
+    title: "Miami, Florida (RT)"
+  },
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/230092/144188068/stock-photo-the-wall-of-the-castle-on-the-cliff-alanya-turkey-144188068.jpg",
+    saleMsg: "34% Savings",
+    attributes: "sale",
+    price: "$894",
+    currency: "USD",
+    description: "cruise description",
+    title: "Charleston, South Carolina (RT)"
+  },
+
+  // flight
+
+  {imgUrl: "http://image.shutterstock.com/display_pic_with_logo/1375780/126301814/stock-photo-night-urban-city-skyline-bangkok-thailand-bangkok-is-the-capital-city-of-thailand-and-the-most-126301814.jpg",
+    price: "$857",
+    currency: "USD",
+    description: "description"}
+];
+
+$.each(cards, function(index, card) {
+  $(".cards").append(cardTemplate(card));
+});
+
+
+//]]></script>
+
+<script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: ""
+    }], "*")
+  }
+
+  // always overwrite window.name, in case users try to set it manually
+  window.name = "result"
+</script>
+
+<script>
+  let allLines = []
+
+  window.addEventListener("message", (message) => {
+    if (message.data.console){
+      let insert = document.querySelector("#insert")
+      allLines.push(message.data.console.payload)
+      insert.innerHTML = allLines.join(";\r")
+
+      let result = eval.call(null, message.data.console.payload)
+      if (result !== undefined){
+        console.log(result)
+      }
+    }
+  })
+</script>
+
+</body>
+</html>
