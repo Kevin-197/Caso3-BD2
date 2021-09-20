@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {addArticulo_r, showAll_r, removeArticulo_r, addOffer_r} from "../repositories/data_subastas";
+import {addArticulo_r, showAll_r, removeArticulo_r, addOffer_r, findArtilo_r} from "../repositories/data_subastas";
 
 export const addArticulo = async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.NombreDueño || !req.query.EmailDueño || !req.query.ExpDate) {
@@ -19,6 +19,10 @@ export const removeArticulo = async (req: Request, res: Response): Promise<Respo
         return removeArticulo_r(req,res);
     }
     
+}
+
+export const findArticulo = async (req: Request, res: Response): Promise<Response> => {    
+    return findArtilo_r(req,res);    
 }
 
 export const addOffer = async (req: Request, res: Response): Promise<Response> => {

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Articulo from "../models/subastas";
 
 export const addArticulo_r = async (req: Request, res: Response): Promise<Response> => {
+    req.query.PublishDate = new Date().toISOString();
     const articulo = await Articulo.findOne({ EmailDueño: req.query.EmailDueño?.toString(), NombreArticulo: req.query.NombreArticulo?.toString()});
     if (articulo) {
         return res.status(400).json({ msg: "El articulo ya existe" });
@@ -40,6 +41,13 @@ export const addOffer_r = async (req: Request, res: Response): Promise<Response>
     else{
         return res.status(400).json({ msg: "No se pudo dar la oferta" });
     }
+    
+}
+
+export const findArtilo_r = async (req: Request, res: Response): Promise<Response> => {
+    const list = await Articulo.find({Active: 1, ...req.query.Date ? { ExpDate: req.query.Date} : {}, ...req.query.Año ? {Año: req.query.Año} : {}, 
+        ...req.query.PrecioMax ? {...req.query.PrecioMin ? { PrecioMaximo: {$gte: req.query.PrecioMin, $lte: req.query.PrecioMax}} : {}} : {}});
+    return res.status(201).json(list);
     
 }
 

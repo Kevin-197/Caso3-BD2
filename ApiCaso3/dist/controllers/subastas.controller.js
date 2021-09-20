@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showAll = exports.addOffer = exports.removeArticulo = exports.addArticulo = void 0;
+exports.showAll = exports.addOffer = exports.findArticulo = exports.removeArticulo = exports.addArticulo = void 0;
 const data_subastas_1 = require("../repositories/data_subastas");
 const addArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.query.NombreDueño || !req.query.EmailDueño || !req.query.ExpDate) {
@@ -29,6 +29,10 @@ const removeArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.removeArticulo = removeArticulo;
+const findArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return (0, data_subastas_1.findArtilo_r)(req, res);
+});
+exports.findArticulo = findArticulo;
 const addOffer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.query.NombreArticulo || !req.query.EmailDueño || !req.query.Offer || !req.query.Nombreo || !req.query.Emailo) {
         return res.status(400).json({ msg: "Please. complete in the information" });

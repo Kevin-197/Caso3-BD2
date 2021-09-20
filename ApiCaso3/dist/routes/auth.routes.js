@@ -7,4 +7,5 @@ router.post('/add', subastas_controller_1.addArticulo);
 router.post('/remove', subastas_controller_1.removeArticulo);
 router.post('/offer', subastas_controller_1.addOffer);
 router.get('/show', subastas_controller_1.showAll);
+router.get('/find', subastas_controller_1.findArticulo);
 exports.default = router;
