@@ -5,17 +5,17 @@
 
     <!-- Templates -->
 
-    <div class="card">
+    <div class="card featured">
         <div class="photo">
             <!-- <img src="{{imgUrl}}"/> -->
             <div class="img" style="background-image: url({{FotoUrl}});"></div>
             <div class="vendor-logo"></div>
             <div class="price">
-                {{PrecioMaximo}}
+                ${{PrecioMaximo}}
             </div>
             <div class="title">
                 <div class="feature-label">
-                    {{Año}}
+                    Inicio: ${{PrecioInicial}}
                 </div>
                 <h3>{{NombreArticulo}}</h3>
                 Fecha de expiración: {{ExpDate}}
@@ -25,9 +25,9 @@
             <div class="title">
             <h3>{{NombreArticulo}}</h3>
             </div>
-            <div class="callToAction">
+            {{!-- <div class="callToAction">
             <a href="#">View</a>
-            </div>
+            </div> --}}
     
 
             <div class="top">
@@ -46,9 +46,14 @@
                 <div class="address">
                     {{Descripción}}
                 </div>
+                <div class="address">
+                    {{Año}}
+                </div>
             </div>
             <div class="bottom">
                 Fecha de expiración: {{ExpDate}}
+                <br>
+                Fecha de publicación: {{PublishDate}}
             </div>
     
         </div>
