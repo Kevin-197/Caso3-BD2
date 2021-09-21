@@ -1,0 +1,53 @@
+{{#if subastas}}
+  {{#each subastas}}
+    <div class="cards product-results"></div>
+
+    <!-- Templates -->
+
+    <div class="card">
+        <div class="photo">
+            <!-- <img src="{{imgUrl}}"/> -->
+            <div class="img" style="background-image: url({{FotoUrl}});"></div>
+            <div class="vendor-logo"></div>
+            <div class="price">
+                {{PrecioMaximo}}
+            </div>
+            <div class="title">
+                <div class="feature-label">
+                    {{Año}}
+                </div>
+                <h3>{{NombreArticulo}}</h3>
+            </div>
+        </div>
+        <div class="description animate">
+            <div class="title">
+            <h3>{{NombreArticulo}}</h3>
+            </div>
+            {{Descripción}}
+            <div class="callToAction">
+            <a href="/">View</a>
+            </div>
+    
+
+            <div class="top">
+                {{!-- {{#if diamondRating}}
+                <div class="rating"> <!-- <span class="diamonds diamond-rating-{{diamondRating}}"></span>
+                --> <span class="diamonds">{{diamondRating diamondRating 5}}</span>
+                <span class="trip-advisor"><img src="{{tripAdvisorUrl}}"/></span> </div>
+                {{/if}} --}}
+                <div class="address">
+                    {{EmailDueño}}
+                </div>
+                <div class="phone">
+                    {{NombreDueño}}
+                </div>
+            </div>
+            <div class="bottom">
+                {{Descripción}}
+
+            </div>
+    
+        </div>
+    </div>
+  {{/each}}
+{{/if}}
