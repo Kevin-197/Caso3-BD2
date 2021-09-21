@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {addArticulo_r, showAll_r, removeArticulo_r, addOffer_r, findArtilo_r} from "../repositories/data_subastas";
+import {addArticulo_r, showAll_r, removeArticulo_r, addOffer_r, findArtilo_r, showAllJSON_r, findArtiloJSON_r} from "../repositories/data_subastas";
 
 export const addArticulo = async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.NombreDueño || !req.query.EmailDueño || !req.query.ExpDate) {
@@ -21,13 +21,13 @@ export const removeArticulo = async (req: Request, res: Response): Promise<Respo
     
 }
 
-export const findArticulo = async (req: Request, res: Response): Promise<Response> => {    
-    var subastas = findArtilo_r(req,res);
-    res.render('index', {
-        subastas
-    });
-    return subastas;    
+export const findArticulo = async (req: Request, res: Response) => {    
+    findArtilo_r(req,res);
 }
+
+export const findArticuloJSON = async (req: Request, res: Response): Promise<Response> => {     
+    return findArtiloJSON_r(req,res);     
+} 
 
 export const addOffer = async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.NombreArticulo || !req.query.EmailDueño || !req.query.Offer || !req.query.Nombreo || !req.query.Emailo) {
@@ -39,11 +39,11 @@ export const addOffer = async (req: Request, res: Response): Promise<Response> =
     
 }
 
-export const showAll = async (req: Request, res: Response): Promise<Response> => {
-    var subastas = showAll_r(req,res);
-    res.render('index', {
-        subastas
-    });
-    return subastas;
+export const showAll = async (req: Request, res: Response) => {
+    showAll_r(req,res);
+    
 }
 
+export const showAllJSON = async (req: Request, res: Response): Promise<Response> => { 
+    return showAllJSON_r(req,res); 
+} 

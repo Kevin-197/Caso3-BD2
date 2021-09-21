@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showAll_r = exports.findArtilo_r = exports.addOffer_r = exports.removeArticulo_r = exports.addArticulo_r = void 0;
+exports.showAllJSON_r = exports.showAll_r = exports.findArtiloJSON_r = exports.findArtilo_r = exports.addOffer_r = exports.removeArticulo_r = exports.addArticulo_r = void 0;
 const subastas_1 = __importDefault(require("../models/subastas"));
 const addArticulo_r = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -56,12 +56,26 @@ const addOffer_r = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.addOffer_r = addOffer_r;
 const findArtilo_r = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const list = yield subastas_1.default.find(Object.assign(Object.assign(Object.assign({ Active: 1 }, req.query.Date ? { ExpDate: req.query.Date } : {}), req.query.Año ? { Año: req.query.Año } : {}), req.query.PrecioMax ? Object.assign({}, req.query.PrecioMin ? { PrecioMaximo: { $gte: req.query.PrecioMin, $lte: req.query.PrecioMax } } : {}) : {}))
+        .lean().exec(function (err, subastas) {
+        res.status(201).render('index', { subastas });
+    });
+});
+exports.findArtilo_r = findArtilo_r;
+const findArtiloJSON_r = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const list = yield subastas_1.default.find(Object.assign(Object.assign(Object.assign({ Active: 1 }, req.query.Date ? { ExpDate: req.query.Date } : {}), req.query.Año ? { Año: req.query.Año } : {}), req.query.PrecioMax ? Object.assign({}, req.query.PrecioMin ? { PrecioMaximo: { $gte: req.query.PrecioMin, $lte: req.query.PrecioMax } } : {}) : {}));
     return res.status(201).json(list);
 });
-exports.findArtilo_r = findArtilo_r;
+exports.findArtiloJSON_r = findArtiloJSON_r;
 const showAll_r = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const lista = yield subastas_1.default.find({ Active: 1 }).lean()
+        .exec(function (err, subastas) {
+        res.status(201).render('index', { subastas });
+    });
+});
+exports.showAll_r = showAll_r;
+const showAllJSON_r = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const list = yield subastas_1.default.find({ Active: 1 });
     return res.status(201).json(list);
 });
-exports.showAll_r = showAll_r;
+exports.showAllJSON_r = showAllJSON_r;
