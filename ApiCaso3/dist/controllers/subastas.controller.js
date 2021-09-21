@@ -8,23 +8,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addArticulo = void 0;
-const subastas_1 = __importDefault(require("../models/subastas"));
+exports.showAll = exports.addOffer = exports.findArticulo = exports.removeArticulo = exports.addArticulo = void 0;
+const data_subastas_1 = require("../repositories/data_subastas");
 const addArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
     if (!req.query.NombreDueño || !req.query.EmailDueño || !req.query.ExpDate) {
-        return res.status(400).json({ msg: "Please. Send your email and password" });
+        return res.status(400).json({ msg: "Please. complete in the information" });
     }
-    const articulo = yield subastas_1.default.findOne({ EmailDueño: (_a = req.query.EmailDueño) === null || _a === void 0 ? void 0 : _a.toString(), NombreArticulo: (_b = req.query.NombreArticulo) === null || _b === void 0 ? void 0 : _b.toString() });
-    if (articulo) {
-        return res.status(400).json({ msg: "El articulo ya existe" });
+    else {
+        return (0, data_subastas_1.addArticulo_r)(req, res);
     }
-    const newArticulo = new subastas_1.default(req.query);
-    yield newArticulo.save();
-    return res.status(201).json(newArticulo);
 });
 exports.addArticulo = addArticulo;
+const removeArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.query.NombreArticulo || !req.query.EmailDueño) {
+        return res.status(400).json({ msg: "Please. complete in the information" });
+    }
+    else {
+        return (0, data_subastas_1.removeArticulo_r)(req, res);
+    }
+});
+exports.removeArticulo = removeArticulo;
+const findArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return (0, data_subastas_1.findArtilo_r)(req, res);
+});
+exports.findArticulo = findArticulo;
+const addOffer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.query.NombreArticulo || !req.query.EmailDueño || !req.query.Offer || !req.query.Nombreo || !req.query.Emailo) {
+        return res.status(400).json({ msg: "Please. complete in the information" });
+    }
+    else {
+        return (0, data_subastas_1.addOffer_r)(req, res);
+    }
+});
+exports.addOffer = addOffer;
+const showAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return (0, data_subastas_1.showAll_r)(req, res);
+});
+exports.showAll = showAll;
