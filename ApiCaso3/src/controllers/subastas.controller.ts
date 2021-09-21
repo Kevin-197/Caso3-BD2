@@ -22,7 +22,11 @@ export const removeArticulo = async (req: Request, res: Response): Promise<Respo
 }
 
 export const findArticulo = async (req: Request, res: Response): Promise<Response> => {    
-    return findArtilo_r(req,res);    
+    var subastas = findArtilo_r(req,res);
+    res.render('index', {
+        subastas
+    });
+    return subastas;    
 }
 
 export const addOffer = async (req: Request, res: Response): Promise<Response> => {
@@ -36,6 +40,10 @@ export const addOffer = async (req: Request, res: Response): Promise<Response> =
 }
 
 export const showAll = async (req: Request, res: Response): Promise<Response> => {
-    return showAll_r(req,res);
+    var subastas = showAll_r(req,res);
+    res.render('index', {
+        subastas
+    });
+    return subastas;
 }
 
