@@ -1,0 +1,62 @@
+<h1>LISTA DE SUBASTAS</h1>
+{{#if subastas}}
+  {{#each subastas}}
+    <div class="cards product-results"></div>
+
+    <!-- Templates -->
+
+    <div class="card featured">
+        <div class="photo">
+            <!-- <img src="{{imgUrl}}"/> -->
+            <div class="img" style="background-image: url({{FotoUrl}});"></div>
+            <div class="vendor-logo"></div>
+            <div class="price">
+                ${{PrecioMaximo}}
+            </div>
+            <div class="title">
+                <div class="feature-label">
+                    Inicio: ${{PrecioInicial}}
+                </div>
+                <h3>{{NombreArticulo}}</h3>
+                Fecha de expiración: {{ExpDate}}
+            </div>
+        </div>
+        <div class="description animate">
+            <div class="title">
+            <h3>{{NombreArticulo}}</h3>
+            </div>
+            {{!-- <div class="callToAction">
+            <a href="#">View</a>
+            </div> --}}
+    
+
+            <div class="top">
+                {{!-- {{#if diamondRating}}
+                <div class="rating"> <!-- <span class="diamonds diamond-rating-{{diamondRating}}"></span>
+                --> <span class="diamonds">{{diamondRating diamondRating 5}}</span>
+                <span class="trip-advisor"><img src="{{tripAdvisorUrl}}"/></span> </div>
+                {{/if}} --}}
+                <div class="phone">
+                    {{NombreDueño}}
+                </div>
+                <div class="address">
+                    {{EmailDueño}}
+                </div>
+                <hr>
+                <div class="address">
+                    {{Descripción}}
+                </div>
+                <div class="address">
+                    {{Año}}
+                </div>
+            </div>
+            <div class="bottom">
+                Fecha de expiración: {{ExpDate}}
+                <br>
+                Fecha de publicación: {{PublishDate}}
+            </div>
+    
+        </div>
+    </div>
+  {{/each}}
+{{/if}}

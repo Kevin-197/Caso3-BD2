@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const subastas_controller_1 = require("../controllers/subastas.controller");
+const router = (0, express_1.Router)();
+router.post('/add', subastas_controller_1.addArticulo);
+router.post('/remove', subastas_controller_1.removeArticulo);
+router.post('/offer', subastas_controller_1.addOffer);
+router.get('/show', subastas_controller_1.showAll);
+router.get('/showJSON', subastas_controller_1.showAllJSON);
+router.get('/find', subastas_controller_1.findArticulo);
+router.get('/findJSON', subastas_controller_1.findArticuloJSON);
+exports.default = router;
