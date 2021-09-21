@@ -44,15 +44,31 @@ export const addOffer_r = async (req: Request, res: Response): Promise<Response>
     
 }
 
-export const findArtilo_r = async (req: Request, res: Response): Promise<Response> => {
+export const findArtilo_r = async (req: Request, res: Response)=> {
     const list = await Articulo.find({Active: 1, ...req.query.Date ? { ExpDate: req.query.Date} : {}, ...req.query.Año ? {Año: req.query.Año} : {}, 
-        ...req.query.PrecioMax ? {...req.query.PrecioMin ? { PrecioMaximo: {$gte: req.query.PrecioMin, $lte: req.query.PrecioMax}} : {}} : {}});
-    return res.status(201).json(list);
+        ...req.query.PrecioMax ? {...req.query.PrecioMin ? { PrecioMaximo: {$gte: req.query.PrecioMin, $lte: req.query.PrecioMax}} : {}} : {}})
+        .lean().exec(function(err, subastas){
+            res.status(201).render('index',{subastas});
+        });
     
 }
 
-export const showAll_r = async (req: Request, res: Response): Promise<Response> => {
-    const list = await Articulo.find({Active: 1});
-    return res.status(201).json(list);
-    
+export const findArtiloJSON_r = async (req: Request, res: Response): Promise<Response> => { 
+    const list = await Articulo.find({Active: 1, ...req.query.Date ? { ExpDate: req.query.Date} : {}, ...req.query.Año ? {Año: req.query.Año} : {},  
+        ...req.query.PrecioMax ? {...req.query.PrecioMin ? { PrecioMaximo: {$gte: req.query.PrecioMin, $lte: req.query.PrecioMax}} : {}} : {}}); 
+    return res.status(201).json(list); 
+     
+} 
+
+export const showAll_r = async (req: Request, res: Response)=> {
+    const lista = await Articulo.find({Active: 1}).lean()
+        .exec(function(err, subastas){
+            res.status(201).render('index',{subastas});
+        });
+}
+
+export const showAllJSON_r = async (req: Request, res: Response): Promise<Response> => { 
+    const list = await Articulo.find({Active: 1}); 
+    return res.status(201).json(list); 
+     
 }

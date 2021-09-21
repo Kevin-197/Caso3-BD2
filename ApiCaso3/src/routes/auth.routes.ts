@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {addArticulo, showAll, removeArticulo, addOffer, findArticulo} from '../controllers/subastas.controller'
+import {addArticulo, showAll, showAllJSON, removeArticulo, addOffer, findArticulo, findArticuloJSON} from '../controllers/subastas.controller'
 
 const router = Router();
 
@@ -10,7 +10,9 @@ router.post('/remove', removeArticulo);
 router.post('/offer', addOffer);
 
 router.get('/show', showAll);
+router.get('/showJSON', showAllJSON);
 
 router.get('/find', findArticulo);
+router.get('/findJSON', findArticuloJSON);
 
 export default router;

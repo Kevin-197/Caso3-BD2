@@ -12,12 +12,11 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 
 // view settings
-app.set('views', path.join(__dirname, '../../src/views'));
+app.set('views', path.join(__dirname, '../src/views'));
 app.engine('.hbs', exphbs({
     extname: '.hbs',
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
-    partialsDir: path.join(app.get('views'), 'partials'),
     helpers: require('./lib/helpers')
 }));
 app.set('view engine', 'hbs');
